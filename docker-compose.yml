@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   fpm:
+    container_name: innoscripta-news-aggregator
     build:
       args:
         user: ${USER}

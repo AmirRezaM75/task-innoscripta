@@ -2,4 +2,5 @@
 
 ```
 composer analyse
+composer fix
 ```

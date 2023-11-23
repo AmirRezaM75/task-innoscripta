@@ -1,0 +1,33 @@
+{
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer analyse"
+            },
+            {
+                "action": "composer fix"
+            },
+            {
+                "action": "php artisan test"
+            }
+        ]
+    },
+    "config": {
+        "bootstrap": "./vendor/autoload.php",
+        "git-directory": ".git",
+        "fail-on-first-error": false,
+        "verbosity": "verbose",
+        "ansi-colors": true,
+        "includes-level": 2,
+        "includes": [],
+        "plugins": [],
+        "php-path": "/usr/local/bin/php",
+        "run": {
+            "mode": "docker",
+            "exec": "docker exec -i innoscripta-news-aggregator",
+            "path": "vendor/bin/captainhook",
+            "git": "/var/www/.git"
+        }
+    }
+}

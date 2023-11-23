@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8"
     },
     "require-dev": {
+        "captainhook/captainhook": "^5.18",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "*",
         "laravel/pint": "^1.0",
@@ -37,7 +38,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "./vendor/bin/captainhook install -f -s"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
