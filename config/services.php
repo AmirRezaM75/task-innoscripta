@@ -31,4 +31,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'new_york_times' => [
+        'token' => env('NEW_YORK_TIMES_TOKEN')
+    ],
+
+    'guardian' => [
+        'token' => env('GUARDIAN_TOKEN')
+    ],
+
+    'news_api' => [
+        'token' => env('NEWS_API_TOKEN')
+    ]
 ];
