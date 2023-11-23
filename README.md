@@ -1,1 +1,5 @@
 # Innoscripta
+
+```
+composer analyse
+```
