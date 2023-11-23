@@ -35,4 +35,9 @@ class NewsApiHttpService
                 'sortBy' => 'publishedAt'
             ]);
     }
+
+    public function sources(): Response
+    {
+        return $this->client->get('top-headlines/sources');
+    }
 }
