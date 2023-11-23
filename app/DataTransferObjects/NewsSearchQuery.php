@@ -13,7 +13,6 @@ readonly class NewsSearchQuery
         public Carbon $to,
         public int $page = 1,
         public int $pageSize = 100,
-        public string $sortBy = 'publishedAt'
     ) {
     }
 }

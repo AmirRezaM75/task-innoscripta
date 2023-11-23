@@ -32,6 +32,7 @@ class NewsApiHttpService
                 'to' => $query->to->toDateString(),
                 'pageSize' => $query->pageSize,
                 'page' => $query->page,
+                'sortBy' => 'publishedAt'
             ]);
     }
 }

@@ -7,6 +7,7 @@ namespace App\DataTransferObjects;
 readonly class NewsSearchResult
 {
     public function __construct(
+        public string $externalId,
         public string $title,
         public string $description,
         public string $author,
