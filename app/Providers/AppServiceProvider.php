@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Services\NewsApiHttpService;
@@ -12,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             NewsApiService::class,
-            fn() => new NewsApiService(
+            fn () => new NewsApiService(
                 new NewsApiHttpService(config('services.news_api.token'))
             )
         );

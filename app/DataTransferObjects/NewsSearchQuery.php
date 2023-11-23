@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataTransferObjects;
 
 use Illuminate\Support\Carbon;
@@ -12,7 +14,6 @@ readonly class NewsSearchQuery
         public int $page = 1,
         public int $pageSize = 100,
         public string $sortBy = 'publishedAt'
-    )
-    {
+    ) {
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataTransferObjects;
 
 readonly class NewsSearchResult
@@ -11,7 +13,6 @@ readonly class NewsSearchResult
         public string $source,
         public string $publishedAt,
         public string|null $category = null
-    )
-    {
+    ) {
     }
 }
