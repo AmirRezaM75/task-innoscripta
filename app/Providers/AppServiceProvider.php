@@ -22,6 +22,9 @@ use App\Services\TheGuardianHttpService;
 use App\Services\TheGuardianService;
 use App\Services\TheNewYorkTimesHttpService;
 use App\Services\TheNewYorkTimesService;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\ClientBuilder;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -79,6 +82,16 @@ class AppServiceProvider extends ServiceProvider
                 new TheNewYorkTimesHttpService(config('services.new_york_times.token')),
             )
         );
+
+        $this->app->singleton(Client::class, function () {
+            return ClientBuilder::create()
+                ->setHosts([Config::get('database.elasticsearch.host')])
+                ->setBasicAuthentication(
+                    Config::get('database.elasticsearch.username'),
+                    Config::get('database.elasticsearch.password'),
+                )
+                ->build();
+        });
     }
 
     public function boot(): void

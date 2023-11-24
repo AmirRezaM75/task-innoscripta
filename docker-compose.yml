@@ -32,7 +32,26 @@ services:
       - ./docker/nginx/config/:/etc/nginx/conf.d
     networks:
       - default
+  redis:
+      image: redis:alpine
+      volumes:
+          - redis-data:/data
+  elasticsearch:
+      image: elasticsearch:8.10.2
+      volumes:
+          - elastic-data:/usr/share/elasticsearch/data
+      ports:
+          - "${ELASTICSEARCH_FORWARD_PORT:-9200}:9200"
+      environment:
+          - discovery.type=single-node
+          - cluster.name=local
+          - xpack.security.enabled=false
+          - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
 
 volumes:
   mysql-data:
+    driver: local
+  elastic-data:
+    driver: local
+  redis-data:
     driver: local
