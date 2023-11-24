@@ -6,6 +6,8 @@ namespace App\Providers;
 
 use App\Repository\ArticleRepository;
 use App\Repository\ArticleRepositoryEloquent;
+use App\Repository\ArticleSearchRepository;
+use App\Repository\ArticleSearchRepositoryEloquent;
 use App\Repository\AuthorRepository;
 use App\Repository\AuthorRepositoryEloquent;
 use App\Repository\CategoryRepository;
@@ -29,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ArticleRepository::class,
             ArticleRepositoryEloquent::class
+        );
+
+        $this->app->bind(
+            ArticleSearchRepository::class,
+            ArticleSearchRepositoryEloquent::class
         );
 
         $this->app->bind(

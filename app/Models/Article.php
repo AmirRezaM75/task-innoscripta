@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -16,10 +17,31 @@ use Illuminate\Support\Carbon;
  * @property int $category_id
  * @property int|null $author_id
  * @property Carbon $published_at
-*/
+ * @property-read Author|null $author
+ * @property-read Category $category
+ * @property-read Source $source
+ */
 class Article extends Model
 {
     protected $casts = [
         'published_at' => 'datetime'
     ];
+
+    /** @return BelongsTo<Author, Article> */
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(Author::class);
+    }
+
+    /** @return BelongsTo<Category, Article> */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /** @return BelongsTo<Source, Article> */
+    public function source(): BelongsTo
+    {
+        return $this->belongsTo(Source::class);
+    }
 }
