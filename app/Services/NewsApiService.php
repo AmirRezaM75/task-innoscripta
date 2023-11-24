@@ -81,10 +81,9 @@ class NewsApiService implements NewsService
             );
         }
 
-        return new NewsSearchResult(
-            count($response->json('articles')),
-            $articles
-        );
+        $hasNextPage = $query->page < ceil((int) $response->json('totalResults') / $query->pageSize);
+
+        return new NewsSearchResult($hasNextPage, $articles);
     }
 
     /**

@@ -16,6 +16,8 @@ use App\Services\NewsApiHttpService;
 use App\Services\NewsApiService;
 use App\Services\TheGuardianHttpService;
 use App\Services\TheGuardianService;
+use App\Services\TheNewYorkTimesHttpService;
+use App\Services\TheNewYorkTimesService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -54,6 +56,13 @@ class AppServiceProvider extends ServiceProvider
             TheGuardianService::class,
             fn () => new TheGuardianService(
                 new TheGuardianHttpService(config('services.guardian.token')),
+            )
+        );
+
+        $this->app->bind(
+            TheNewYorkTimesService::class,
+            fn () => new TheNewYorkTimesService(
+                new TheNewYorkTimesHttpService(config('services.new_york_times.token')),
             )
         );
     }

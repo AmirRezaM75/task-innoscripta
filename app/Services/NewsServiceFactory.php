@@ -14,6 +14,7 @@ class NewsServiceFactory
         return match($source) {
             NewsDataSource::NewsApi => App::make(NewsApiService::class),
             NewsDataSource::TheGuardian => App::make(TheGuardianService::class),
+            NewsDataSource::TheNewYorkTimes => App::make(TheNewYorkTimesService::class),
         };
     }
 }

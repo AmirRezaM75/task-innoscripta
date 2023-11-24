@@ -10,14 +10,14 @@ use App\Jobs\ImportNewsArticleResult;
 use App\Services\NewsServiceFactory;
 use Illuminate\Support\Carbon;
 
-class ImportTheGuardianArticles
+class ImportTheNewYorkTimesArticles
 {
     public function execute(Carbon $from, Carbon $to): void
     {
-        $page = 1;
+        $page = 0;
 
         do {
-            $query = new NewsSearchQuery(NewsDataSource::TheGuardian, $from, $to, $page);
+            $query = new NewsSearchQuery(NewsDataSource::TheNewYorkTimes, $from, $to, $page, pageSize: 30);
 
             $response = NewsServiceFactory::build($query->dataSource)->search($query);
 

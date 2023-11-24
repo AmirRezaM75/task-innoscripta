@@ -13,56 +13,59 @@ use App\DataTransferObjects\NewsSourceResult;
 use App\Exceptions\NewsSearchException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
-class TheGuardianService implements NewsService
+class TheNewYorkTimesService implements NewsService
 {
-    public const SOURCE_NAME = 'The Guardian';
+    public const SOURCE_NAME = 'The New York Times';
 
     public function __construct(
-        private readonly TheGuardianHttpService $theGuardianHttpService,
+        private readonly TheNewYorkTimesHttpService $theNewYorkTimesHttpService,
     ) {
     }
 
     public function search(NewsSearchQuery $query): NewsSearchResult
     {
-        $response = $this->theGuardianHttpService->search($query);
+        $response = $this->theNewYorkTimesHttpService->search($query);
 
         Log::info(urldecode((string) $response->transferStats?->getEffectiveUri()));
 
         if ($response->status() !== 200) {
             throw new NewsSearchException(
-                $response->json('response.message', $response->json('message', '')),
+                $response->json('fault.faultstring', ''),
                 $response->status()
             );
         }
 
-        $articles = [];
+        $results = [];
 
-        $results = $response->json('response.results', []);
+        $articles = $response->json('response.docs', []);
 
-        foreach ($results as $article) {
+        foreach ($articles as $article) {
             $source = new NewsSourceResult(
-                NewsDataSource::TheGuardian->value,
+                NewsDataSource::TheNewYorkTimes->value,
                 self::SOURCE_NAME
             );
 
             $category = new NewsCategoryResult(
-                $article['sectionId'],
-                $article['sectionName'],
+                Str::slug($article['section_name']),
+                $article['section_name'],
             );
 
-            $articles[] = new NewsArticleResult(
-                $article['id'],
-                $article['webTitle'],
-                strip_tags($article['fields']['body']),
-                Carbon::parse($article['webPublicationDate']),
+            $results[] = new NewsArticleResult(
+                $article['_id'],
+                $article['abstract'],
+                $article['lead_paragraph'],
+                Carbon::parse($article['pub_date']),
                 $source,
                 $category,
             );
         }
 
-        $hasNextPage = $query->page < (int) $response->json('response.pages');
+        $hits = max(0, (int) $response->json('response.meta.hits') - 1);
 
-        return new NewsSearchResult($hasNextPage, $articles);
+        $hasNextPage = $query->page < intval($hits / 10);
+
+        return new NewsSearchResult($hasNextPage, $results);
     }
 }

@@ -8,7 +8,7 @@ readonly class NewsSearchResult
 {
     /** @param NewsArticleResult[] $articles */
     public function __construct(
-        public int $total,
+        public bool $hasNextPage,
         public array $articles
     ) {
     }

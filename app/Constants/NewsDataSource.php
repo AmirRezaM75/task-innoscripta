@@ -8,4 +8,5 @@ enum NewsDataSource: string
 {
     case NewsApi = 'news-api';
     case TheGuardian = 'the-guardian';
+    case TheNewYorkTimes = 'the-new-york-times';
 }

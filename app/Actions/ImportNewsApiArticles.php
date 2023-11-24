@@ -53,7 +53,7 @@ class ImportNewsApiArticles
                 }
 
                 $page++;
-            } while($response->total >= $query->pageSize);
+            } while($response->hasNextPage);
 
 
             $offset += $limit;
