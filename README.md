@@ -34,3 +34,7 @@ php artisan app:import-guardian-articles
 ```bash
 php artisan app:import-nytimes-articles
 ```
+
+## API
+
+Download and import [postman collection](./storage/Innoscripta.postman_collection.json) located at `storage/` directory.
