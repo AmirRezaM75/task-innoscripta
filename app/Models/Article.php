@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property-read int $id
+ * @property string $external_id
  * @property string $title
  * @property string $description
  * @property int $source_id

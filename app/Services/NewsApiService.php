@@ -10,11 +10,13 @@ use App\DataTransferObjects\NewsCategoryResult;
 use App\DataTransferObjects\NewsSearchQuery;
 use App\DataTransferObjects\NewsSearchResult;
 use App\DataTransferObjects\NewsSourceResult;
+use App\Exceptions\MaximumResultsReachedException;
 use App\Exceptions\NewsApiSourceNotFoundException;
 use App\Exceptions\NewsApiSourcesException;
 use App\Exceptions\NewsSearchException;
 use App\Repository\NewsApiSourceRepository;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class NewsApiService implements NewsService
@@ -28,6 +30,12 @@ class NewsApiService implements NewsService
     public function search(NewsSearchQuery $query): NewsSearchResult
     {
         $response = $this->newsApiHttpService->search($query);
+
+        Log::info(urldecode((string) $response->transferStats?->getEffectiveUri()));
+
+        if ($response->json('code') === 'maximumResultsReached') {
+            throw new MaximumResultsReachedException($response->json('message'));
+        }
 
         if ($response->json('status') === 'error') {
             throw new NewsSearchException($response->json('message'));

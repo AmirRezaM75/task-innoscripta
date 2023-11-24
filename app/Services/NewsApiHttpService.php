@@ -30,7 +30,10 @@ class NewsApiHttpService
             ->get('everything', [
                 'from' => $query->from->toDateString(),
                 'to' => $query->to->toDateString(),
-                'pageSize' => $query->pageSize,
+                // NewsApi has a bug when using pageSize and page combination:
+                // You have requested too many results. Developer accounts are limited to a max of 100 results.
+                // You are trying to request results 150 to 200. Please upgrade to a paid plan if you need more results.
+                // 'pageSize' => $query->pageSize,
                 'page' => $query->page,
                 'sortBy' => 'publishedAt',
                 'sources' => $query->getSources()

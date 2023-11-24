@@ -6,10 +6,12 @@ namespace App\Actions;
 
 use App\Constants\NewsDataSource;
 use App\DataTransferObjects\NewsSearchQuery;
+use App\Exceptions\MaximumResultsReachedException;
 use App\Jobs\ImportNewsArticleResult;
 use App\Repository\NewsApiSourceRepository;
 use App\Services\NewsServiceFactory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class ImportNewsApiArticles
 {
@@ -39,7 +41,12 @@ class ImportNewsApiArticles
                 $query = new NewsSearchQuery(NewsDataSource::NewsApi, $from, $to, $page);
                 $query->setSources($sources);
 
-                $response = NewsServiceFactory::build($query->dataSource)->search($query);
+                try {
+                    $response = NewsServiceFactory::build($query->dataSource)->search($query);
+                } catch (MaximumResultsReachedException $e) {
+                    Log::error($e->getMessage());
+                    break;
+                }
 
                 foreach ($response->articles as $article) {
                     ImportNewsArticleResult::dispatch($article);

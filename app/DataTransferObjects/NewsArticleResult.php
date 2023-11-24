@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 readonly class NewsArticleResult
 {
     public function __construct(
-        public string             $externalId,
+        public string             $id,
         public string             $title,
         public string             $description,
         public Carbon             $publishedAt,

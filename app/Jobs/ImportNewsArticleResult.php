@@ -15,6 +15,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 /** @method static void dispatch(NewsArticleResult $newsSearchResult) */
 class ImportNewsArticleResult implements ShouldQueue
@@ -25,8 +26,7 @@ class ImportNewsArticleResult implements ShouldQueue
 
     public function __construct(
         private readonly NewsArticleResult $article,
-    )
-    {
+    ) {
         //
     }
 
@@ -34,8 +34,15 @@ class ImportNewsArticleResult implements ShouldQueue
         CategoryRepository $categoryRepository,
         SourceRepository   $sourceRepository,
         ArticleRepository  $articleRepository,
-    ): void
-    {
+    ): void {
+
+        $exists = $articleRepository->findByExternalId($this->article->id);
+
+        if ($exists) {
+            Log::info(sprintf('Article with external id %s exists.', $this->article->id));
+            return;
+        }
+
         $category = $categoryRepository->findBySlug($this->article->category->id);
 
         if ($category === null) {
@@ -55,6 +62,7 @@ class ImportNewsArticleResult implements ShouldQueue
         }
 
         $article = new Article();
+        $article->external_id = $this->article->id;
         $article->title = $this->article->title;
         $article->description = $this->article->description;
         $article->source_id = $source->id;

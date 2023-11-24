@@ -11,8 +11,9 @@ return new class () extends Migration {
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->string('external_id')->unique();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->fulltext();
             $table->foreignId('source_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->dateTime('published_at');

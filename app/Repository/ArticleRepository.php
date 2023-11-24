@@ -8,5 +8,7 @@ use App\Models\Article;
 
 interface ArticleRepository
 {
+    public function findByExternalId(string $externalId): Article|null;
+
     public function save(Article $article): void;
 }
