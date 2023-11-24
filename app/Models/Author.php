@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read int $id
+ * @property int $id
  * @property string $slug
  * @property string $name
  * @property Carbon $created_at

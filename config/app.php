@@ -187,4 +187,10 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+     * We can switch between MySQL and Elasticsearch in case of outage.
+     * possible values: mysql, elasticsearch
+     */
+    'search_engine' => env('SEARCH_ENGINE', 'mysql')
+
 ];

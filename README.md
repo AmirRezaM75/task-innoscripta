@@ -38,3 +38,13 @@ php artisan app:import-nytimes-articles
 ## API
 
 Download and import [postman collection](./storage/Innoscripta.postman_collection.json) located at `storage/` directory.
+
+## Switch Search Engine
+
+We can switch between MySQL and Elasticsearch in case of outage.
+
+possible values: `mysql`, `elasticsearch`
+
+```
+SEARCH_ENGINE=elasticsearch
+```

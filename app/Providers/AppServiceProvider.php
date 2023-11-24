@@ -9,6 +9,7 @@ use App\Repository\ArticlePersistenceRepositoryElasticsearch;
 use App\Repository\ArticleRepository;
 use App\Repository\ArticleRepositoryEloquent;
 use App\Repository\ArticleSearchRepository;
+use App\Repository\ArticleSearchRepositoryElastic;
 use App\Repository\ArticleSearchRepositoryEloquent;
 use App\Repository\AuthorRepository;
 use App\Repository\AuthorRepositoryEloquent;
@@ -26,6 +27,7 @@ use App\Services\TheNewYorkTimesHttpService;
 use App\Services\TheNewYorkTimesService;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,11 +43,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ArticleRepository::class,
             ArticleRepositoryEloquent::class
-        );
-
-        $this->app->bind(
-            ArticleSearchRepository::class,
-            ArticleSearchRepositoryEloquent::class
         );
 
         $this->app->bind(
@@ -99,6 +96,15 @@ class AppServiceProvider extends ServiceProvider
                 )
                 ->build();
         });
+
+        $this->app->bind(
+            ArticleSearchRepository::class,
+            fn (Application $app) => $app->make(
+                config('app.search_engine') === 'mysql'
+                    ? ArticleSearchRepositoryEloquent::class
+                    : ArticleSearchRepositoryElastic::class
+            )
+        );
     }
 
     public function boot(): void

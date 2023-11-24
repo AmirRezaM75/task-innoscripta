@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read int $id
+ * @property int $id
  * @property string $external_id
  * @property string $title
  * @property string $description
@@ -17,9 +17,9 @@ use Illuminate\Support\Carbon;
  * @property int $category_id
  * @property int|null $author_id
  * @property Carbon $published_at
- * @property-read Author|null $author
- * @property-read Category $category
- * @property-read Source $source
+ * @property Author|null $author
+ * @property Category $category
+ * @property Source $source
  */
 class Article extends Model
 {
