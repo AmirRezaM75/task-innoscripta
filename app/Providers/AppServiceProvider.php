@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repository\CategoryRepository;
+use App\Repository\CategoryRepositoryEloquent;
 use App\Repository\NewsApiSourceRepository;
 use App\Repository\NewsApiSourceRepositoryEloquent;
 use App\Services\NewsApiHttpService;
@@ -15,15 +17,21 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            NewsApiService::class,
-            fn () => new NewsApiService(
-                new NewsApiHttpService(config('services.news_api.token'))
-            )
+            NewsApiSourceRepository::class,
+            NewsApiSourceRepositoryEloquent::class
         );
 
         $this->app->bind(
-            NewsApiSourceRepository::class,
-            NewsApiSourceRepositoryEloquent::class
+            CategoryRepository::class,
+            CategoryRepositoryEloquent::class
+        );
+
+        $this->app->bind(
+            NewsApiService::class,
+            fn () => new NewsApiService(
+                new NewsApiHttpService(config('services.news_api.token')),
+                $this->app->make(NewsApiSourceRepository::class)
+            )
         );
     }
 

@@ -6,14 +6,10 @@ namespace App\DataTransferObjects;
 
 readonly class NewsSearchResult
 {
+    /** @param NewsArticleResult[] $articles */
     public function __construct(
-        public string $externalId,
-        public string $title,
-        public string $description,
-        public string $author,
-        public string $source,
-        public string $publishedAt,
-        public string|null $category = null
+        public int $total,
+        public array $articles
     ) {
     }
 }
