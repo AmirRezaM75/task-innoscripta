@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "9038d48e-8f58-446f-8d97-2d43ee46c22b",
+		"name": "Innoscripta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10057093"
+	},
+	"item": [
+		{
+			"name": "Sources list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/sources",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"sources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/categories",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authors list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/authors",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Articles list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/articles",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"articles"
+					],
+					"query": [
+						{
+							"key": "sourceId",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "q",
+							"value": "campaign",
+							"disabled": true
+						},
+						{
+							"key": "categoryId",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "authorId",
+							"value": "27",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "10",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
