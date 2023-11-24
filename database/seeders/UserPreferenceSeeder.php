@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Constants\PreferenceTargetType;
+use App\Constants\TargetType;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\Source;
@@ -25,7 +25,7 @@ class UserPreferenceSeeder extends Seeder
             UserPreference::query()->create([
                 'user_id' => $user->id,
                 'target_id' => $author->id,
-                'target_type' => PreferenceTargetType::Author
+                'target_type' => TargetType::Author
             ]);
         }
 
@@ -35,7 +35,7 @@ class UserPreferenceSeeder extends Seeder
             UserPreference::query()->create([
                 'user_id' => $user->id,
                 'target_id' => $category->id,
-                'target_type' => PreferenceTargetType::Category
+                'target_type' => TargetType::Category
             ]);
         }
 
@@ -45,7 +45,7 @@ class UserPreferenceSeeder extends Seeder
             UserPreference::query()->create([
                 'user_id' => $user->id,
                 'target_id' => $source->id,
-                'target_type' => PreferenceTargetType::Source
+                'target_type' => TargetType::Source
             ]);
         }
     }

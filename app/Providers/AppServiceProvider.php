@@ -19,6 +19,8 @@ use App\Repository\NewsApiSourceRepository;
 use App\Repository\NewsApiSourceRepositoryEloquent;
 use App\Repository\SourceRepository;
 use App\Repository\SourceRepositoryEloquent;
+use App\Repository\UserPreferenceRepository;
+use App\Repository\UserPreferenceRepositoryEloquent;
 use App\Services\NewsApiHttpService;
 use App\Services\NewsApiService;
 use App\Services\TheGuardianHttpService;
@@ -104,6 +106,11 @@ class AppServiceProvider extends ServiceProvider
                     ? ArticleSearchRepositoryEloquent::class
                     : ArticleSearchRepositoryElastic::class
             )
+        );
+
+        $this->app->bind(
+            UserPreferenceRepository::class,
+            UserPreferenceRepositoryEloquent::class
         );
     }
 

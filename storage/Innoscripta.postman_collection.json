@@ -77,12 +77,12 @@
 					"query": [
 						{
 							"key": "sourceId",
-							"value": "2",
+							"value": "3",
 							"disabled": true
 						},
 						{
 							"key": "q",
-							"value": "campaign",
+							"value": "Industry",
 							"disabled": true
 						},
 						{
@@ -92,7 +92,7 @@
 						},
 						{
 							"key": "authorId",
-							"value": "27",
+							"value": "6",
 							"disabled": true
 						},
 						{
@@ -103,6 +103,12 @@
 						{
 							"key": "pageSize",
 							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "preferential",
+							"value": "1",
+							"description": "Include user preferences",
 							"disabled": true
 						}
 					]

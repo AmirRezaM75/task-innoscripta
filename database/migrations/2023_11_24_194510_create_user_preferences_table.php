@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Constants\PreferenceTargetType;
+use App\Constants\TargetType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,9 +14,9 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('target_type', [
-                PreferenceTargetType::Author->value,
-                PreferenceTargetType::Category->value,
-                PreferenceTargetType::Source->value,
+                TargetType::Author->value,
+                TargetType::Category->value,
+                TargetType::Source->value,
             ]);
             $table->unsignedBigInteger('target_id');
             $table->timestamps();

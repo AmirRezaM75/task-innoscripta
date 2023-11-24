@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use Spatie\LaravelData\Attributes\Validation\BooleanType;
 use Spatie\LaravelData\Attributes\Validation\IntegerType;
 use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\Sometimes;
@@ -36,6 +38,19 @@ class ListArticlesRequest extends Data
         #[IntegerType]
         #[Min(1)]
         public readonly int $pageSize = 10,
+        #[Sometimes]
+        #[BooleanType]
+        public readonly bool $preferential = false,
     ) {
+    }
+
+    public function getAuthId(): int|null
+    {
+        // This must come from authenticate middleware
+        // but, it's outside the scope of this project
+        // Also, repository pattern is ignored.
+        /** @var User|null $user */
+        $user = User::query()->first();
+        return $user?->id;
     }
 }

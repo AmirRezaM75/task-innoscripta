@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\DataTransferObjects\ArticleSearchQuery;
 use App\DataTransferObjects\ArticlesSearchResult;
-use App\Http\Requests\ListArticlesRequest;
 use App\Models\Article;
 
 class ArticleSearchRepositoryEloquent implements ArticleSearchRepository
 {
-    public function get(ListArticlesRequest $query): ArticlesSearchResult
+    public function get(ArticleSearchQuery $query): ArticlesSearchResult
     {
         $base = Article::query()
-            ->when($query->sourceId, fn ($q) => $q->where('source_id', $query->sourceId))
-            ->when($query->categoryId, fn ($q) => $q->where('category_id', $query->categoryId))
-            ->when($query->authorId, fn ($q) => $q->where('author_id', $query->authorId))
+            ->when($query->sourceIds, fn ($q) => $q->whereIntegerInRaw('source_id', $query->sourceIds))
+            ->when($query->categoryIds, fn ($q) => $q->whereIntegerInRaw('category_id', $query->categoryIds))
+            ->when($query->authorIds, fn ($q) => $q->whereIntegerInRaw('author_id', $query->authorIds))
             ->when(
                 !empty($query->q),
                 fn ($q) => $q->whereFullText(['title', 'description'], $query->q),

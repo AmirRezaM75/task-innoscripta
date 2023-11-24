@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\DataTransferObjects\ArticleSearchQuery;
 use App\DataTransferObjects\ArticlesSearchResult;
-use App\Http\Requests\ListArticlesRequest;
 use App\Mappings\ArticleMapping;
 use App\Models\Article;
 use App\Models\Author;
@@ -20,7 +20,7 @@ class ArticleSearchRepositoryElastic implements ArticleSearchRepository
     {
     }
 
-    public function get(ListArticlesRequest $query): ArticlesSearchResult
+    public function get(ArticleSearchQuery $query): ArticlesSearchResult
     {
 
         $q = [
@@ -52,26 +52,26 @@ class ArticleSearchRepositoryElastic implements ArticleSearchRepository
             ];
         }
 
-        if ($query->authorId) {
+        if ($query->authorIds) {
             $q['bool']['filter'][] = [
-                'term' => [
-                    'author.id' => $query->authorId
+                'terms' => [
+                    'author.id' => $query->authorIds
                 ]
             ];
         }
 
-        if ($query->categoryId) {
+        if ($query->categoryIds) {
             $q['bool']['filter'][] = [
-                'term' => [
-                    'category.id' => $query->categoryId
+                'terms' => [
+                    'category.id' => $query->categoryIds
                 ]
             ];
         }
 
-        if ($query->sourceId) {
+        if ($query->sourceIds) {
             $q['bool']['filter'][] = [
-                'term' => [
-                    'source.id' => $query->sourceId
+                'terms' => [
+                    'source.id' => $query->sourceIds
                 ]
             ];
         }
