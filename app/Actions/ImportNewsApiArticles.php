@@ -7,7 +7,7 @@ namespace App\Actions;
 use App\Constants\NewsDataSource;
 use App\DataTransferObjects\NewsSearchQuery;
 use App\Exceptions\MaximumResultsReachedException;
-use App\Jobs\ImportNewsArticleResult;
+use App\Jobs\ImportNewsSearchResultArticle;
 use App\Repository\NewsApiSourceRepository;
 use App\Services\NewsServiceFactory;
 use Illuminate\Support\Carbon;
@@ -49,7 +49,7 @@ class ImportNewsApiArticles
                 }
 
                 foreach ($response->articles as $article) {
-                    ImportNewsArticleResult::dispatch($article);
+                    ImportNewsSearchResultArticle::dispatch($article);
                 }
 
                 $page++;

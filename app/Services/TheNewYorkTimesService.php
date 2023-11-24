@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Constants\NewsDataSource;
-use App\DataTransferObjects\NewsArticleResult;
-use App\DataTransferObjects\NewsCategoryResult;
 use App\DataTransferObjects\NewsSearchQuery;
 use App\DataTransferObjects\NewsSearchResult;
-use App\DataTransferObjects\NewsSourceResult;
+use App\DataTransferObjects\NewsSearchResultArticle;
+use App\DataTransferObjects\NewsSearchResultCategory;
+use App\DataTransferObjects\NewsSearchResultSource;
 use App\Exceptions\NewsSearchException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -42,17 +42,17 @@ class TheNewYorkTimesService implements NewsService
         $articles = $response->json('response.docs', []);
 
         foreach ($articles as $article) {
-            $source = new NewsSourceResult(
+            $source = new NewsSearchResultSource(
                 NewsDataSource::TheNewYorkTimes->value,
                 self::SOURCE_NAME
             );
 
-            $category = new NewsCategoryResult(
+            $category = new NewsSearchResultCategory(
                 Str::slug($article['section_name']),
                 $article['section_name'],
             );
 
-            $results[] = new NewsArticleResult(
+            $results[] = new NewsSearchResultArticle(
                 $article['_id'],
                 $article['abstract'],
                 $article['lead_paragraph'],

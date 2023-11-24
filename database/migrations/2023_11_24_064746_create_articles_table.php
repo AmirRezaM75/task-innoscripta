@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->mediumText('description')->fulltext();
             $table->foreignId('source_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('author_id')->nullable()->constrained()->cascadeOnDelete();
             $table->dateTime('published_at');
             $table->timestamps();
         });

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\DataTransferObjects\NewsApiSourceResult;
-use App\DataTransferObjects\NewsArticleResult;
-use App\DataTransferObjects\NewsCategoryResult;
 use App\DataTransferObjects\NewsSearchQuery;
 use App\DataTransferObjects\NewsSearchResult;
-use App\DataTransferObjects\NewsSourceResult;
+use App\DataTransferObjects\NewsSearchResultArticle;
+use App\DataTransferObjects\NewsSearchResultAuthor;
+use App\DataTransferObjects\NewsSearchResultCategory;
+use App\DataTransferObjects\NewsSearchResultSource;
 use App\Exceptions\MaximumResultsReachedException;
 use App\Exceptions\NewsApiSourceNotFoundException;
 use App\Exceptions\NewsApiSourcesException;
@@ -52,7 +53,7 @@ class NewsApiService implements NewsService
                 continue;
             }
 
-            $source = new NewsSourceResult($sourceId, $article['source']['name']);
+            $source = new NewsSearchResultSource($sourceId, $article['source']['name']);
 
             $newsApiSource = $this->newsApiSourceRepository->findByExternalId($sourceId);
 
@@ -63,21 +64,26 @@ class NewsApiService implements NewsService
                 ");
             }
 
-            $category = new NewsCategoryResult(
+            $category = new NewsSearchResultCategory(
                 Str::slug($newsApiSource->category),
                 $newsApiSource->category,
             );
 
+            $author = new NewsSearchResultAuthor(
+                Str::slug($article['author']),
+                $article['author'],
+            );
+
             // NewsApi not returning any unique id, we could use slugify version of title,
             // but it's not bulletproof if it gets updated.
-            $articles[] = new NewsArticleResult(
+            $articles[] = new NewsSearchResultArticle(
                 $article['url'],
                 $article['title'],
                 $article['description'],
                 Carbon::parse($article['publishedAt']),
                 $source,
                 $category,
-                $article['author'],
+                $author,
             );
         }
 

@@ -6,7 +6,7 @@ namespace App\DataTransferObjects;
 
 readonly class NewsSearchResult
 {
-    /** @param NewsArticleResult[] $articles */
+    /** @param NewsSearchResultArticle[] $articles */
     public function __construct(
         public bool $hasNextPage,
         public array $articles

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\DataTransferObjects\NewsArticleResult;
+use App\DataTransferObjects\NewsSearchResultArticle;
 use App\Models\Article;
+use App\Models\Author;
 use App\Models\Category;
 use App\Models\Source;
 use App\Repository\ArticleRepository;
+use App\Repository\AuthorRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\SourceRepository;
 use Illuminate\Bus\Queueable;
@@ -17,15 +19,15 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-/** @method static void dispatch(NewsArticleResult $newsSearchResult) */
-class ImportNewsArticleResult implements ShouldQueue
+/** @method static void dispatch(NewsSearchResultArticle $newsSearchResult) */
+class ImportNewsSearchResultArticle implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
 
     public function __construct(
-        private readonly NewsArticleResult $article,
+        private readonly NewsSearchResultArticle $article,
     ) {
         //
     }
@@ -34,6 +36,7 @@ class ImportNewsArticleResult implements ShouldQueue
         CategoryRepository $categoryRepository,
         SourceRepository   $sourceRepository,
         ArticleRepository  $articleRepository,
+        AuthorRepository   $authorRepository,
     ): void {
 
         $exists = $articleRepository->findByExternalId($this->article->id);
@@ -61,12 +64,26 @@ class ImportNewsArticleResult implements ShouldQueue
             $sourceRepository->save($source);
         }
 
+        $author = null;
+
+        if ($this->article->author) {
+            $author = $authorRepository->findBySlug($this->article->author->id);
+
+            if ($author === null) {
+                $author = new Author();
+                $author->slug = $this->article->author->id;
+                $author->name = $this->article->author->name;
+                $authorRepository->save($author);
+            }
+        }
+
         $article = new Article();
         $article->external_id = $this->article->id;
         $article->title = $this->article->title;
         $article->description = $this->article->description;
         $article->source_id = $source->id;
         $article->category_id = $category->id;
+        $article->author_id = $author?->id;
         $article->published_at = $this->article->publishedAt;
 
         $articleRepository->save($article);

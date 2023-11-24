@@ -6,7 +6,7 @@ namespace App\Actions;
 
 use App\Constants\NewsDataSource;
 use App\DataTransferObjects\NewsSearchQuery;
-use App\Jobs\ImportNewsArticleResult;
+use App\Jobs\ImportNewsSearchResultArticle;
 use App\Services\NewsServiceFactory;
 use Illuminate\Support\Carbon;
 
@@ -22,7 +22,7 @@ class ImportTheGuardianArticles
             $response = NewsServiceFactory::build($query->dataSource)->search($query);
 
             foreach ($response->articles as $article) {
-                ImportNewsArticleResult::dispatch($article);
+                ImportNewsSearchResultArticle::dispatch($article);
             }
 
             $page++;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -15,12 +14,11 @@ use Illuminate\Support\Carbon;
  * @property string $description
  * @property int $source_id
  * @property int $category_id
+ * @property int|null $author_id
  * @property Carbon $published_at
 */
 class Article extends Model
 {
-    use HasFactory;
-
     protected $casts = [
         'published_at' => 'datetime'
     ];

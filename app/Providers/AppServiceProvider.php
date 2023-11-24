@@ -6,6 +6,8 @@ namespace App\Providers;
 
 use App\Repository\ArticleRepository;
 use App\Repository\ArticleRepositoryEloquent;
+use App\Repository\AuthorRepository;
+use App\Repository\AuthorRepositoryEloquent;
 use App\Repository\CategoryRepository;
 use App\Repository\CategoryRepositoryEloquent;
 use App\Repository\NewsApiSourceRepository;
@@ -27,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ArticleRepository::class,
             ArticleRepositoryEloquent::class
+        );
+
+        $this->app->bind(
+            AuthorRepository::class,
+            AuthorRepositoryEloquent::class
         );
 
         $this->app->bind(

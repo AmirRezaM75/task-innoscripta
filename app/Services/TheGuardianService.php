@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Constants\NewsDataSource;
-use App\DataTransferObjects\NewsArticleResult;
-use App\DataTransferObjects\NewsCategoryResult;
 use App\DataTransferObjects\NewsSearchQuery;
 use App\DataTransferObjects\NewsSearchResult;
-use App\DataTransferObjects\NewsSourceResult;
+use App\DataTransferObjects\NewsSearchResultArticle;
+use App\DataTransferObjects\NewsSearchResultCategory;
+use App\DataTransferObjects\NewsSearchResultSource;
 use App\Exceptions\NewsSearchException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -41,17 +41,17 @@ class TheGuardianService implements NewsService
         $results = $response->json('response.results', []);
 
         foreach ($results as $article) {
-            $source = new NewsSourceResult(
+            $source = new NewsSearchResultSource(
                 NewsDataSource::TheGuardian->value,
                 self::SOURCE_NAME
             );
 
-            $category = new NewsCategoryResult(
+            $category = new NewsSearchResultCategory(
                 $article['sectionId'],
                 $article['sectionName'],
             );
 
-            $articles[] = new NewsArticleResult(
+            $articles[] = new NewsSearchResultArticle(
                 $article['id'],
                 $article['webTitle'],
                 strip_tags($article['fields']['body']),
