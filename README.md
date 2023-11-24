@@ -58,3 +58,11 @@ up and running just run following command:
 ```
 php artisan schedule:run
 ```
+
+## User Preferences
+
+Before seeding user preferences data, make sure to run one of [commands](#commands) mentioned above.
+
+```
+php artisan db:seed
+```
