@@ -18,6 +18,7 @@ php artisan app:import-newsapi-sources
 ```
 
 ## Fetch NewsApi articles
+
 ```bash
 php artisan app:import-newsapi-articles --from 2023-11-23 --to 2023-11-23
 ```

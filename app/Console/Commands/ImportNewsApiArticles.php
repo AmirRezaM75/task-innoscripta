@@ -18,9 +18,10 @@ class ImportNewsApiArticles extends Command
 
     public function handle(ImportNewsApiArticlesAction $action): int
     {
-        $from = $this->option('from') ? Carbon::parse($this->option('from')) : now()->startOfDay();
+        // NewsApi gets updated at the end of the day, so you won't get any results for current day.
+        $from = $this->option('from') ? Carbon::parse($this->option('from')) : now()->subDay()->startOfDay();
 
-        $to = $this->option('to') ? Carbon::parse($this->option('to')) : now()->endOfDay();
+        $to = $this->option('to') ? Carbon::parse($this->option('to')) : now()->subDay()->endOfDay();
 
         $action->execute($from, $to);
 

@@ -16,7 +16,11 @@ class ArticleSearchRepositoryEloquent implements ArticleSearchRepository
             ->when($query->sourceId, fn ($q) => $q->where('source_id', $query->sourceId))
             ->when($query->categoryId, fn ($q) => $q->where('category_id', $query->categoryId))
             ->when($query->authorId, fn ($q) => $q->where('author_id', $query->authorId))
-            ->when(!empty($query->q), fn ($q) => $q->whereFullText('description', $query->q));
+            ->when(
+                !empty($query->q),
+                fn ($q) => $q->whereFullText(['title', 'description'], $query->q),
+                fn ($q) => $q->orderByDesc('published_at')
+            );
 
         $total = $base->count();
 

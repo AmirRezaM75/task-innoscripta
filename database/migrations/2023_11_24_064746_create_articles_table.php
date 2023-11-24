@@ -13,12 +13,14 @@ return new class () extends Migration {
             $table->id();
             $table->string('external_id')->unique();
             $table->string('title');
-            $table->mediumText('description')->fulltext();
+            $table->mediumText('description');
             $table->foreignId('source_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('author_id')->nullable()->constrained()->cascadeOnDelete();
             $table->dateTime('published_at');
             $table->timestamps();
+
+            $table->fullText(['title', 'description']);
         });
     }
 
