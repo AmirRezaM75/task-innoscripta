@@ -12,7 +12,8 @@ class NewsServiceFactory
     public static function build(NewsDataSource $source): NewsService
     {
         return match($source) {
-            NewsDataSource::NewsApi => App::make(NewsApiService::class)
+            NewsDataSource::NewsApi => App::make(NewsApiService::class),
+            NewsDataSource::TheGuardian => App::make(TheGuardianService::class),
         };
     }
 }

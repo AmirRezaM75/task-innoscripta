@@ -25,9 +25,8 @@ class NewsSearchQuery
     /** @param string[] $sources */
     public function setSources(array $sources): void
     {
-        /** @phpstan-ignore-next-line */
         if ($this->dataSource !== NewsDataSource::NewsApi) {
-            throw new InvalidArgumentException("Sources filter is not supported for {$this->dataSource} data source.");
+            throw new InvalidArgumentException("Sources filter is not supported for {$this->dataSource->value} data source.");
         }
 
         $this->sources = $sources;

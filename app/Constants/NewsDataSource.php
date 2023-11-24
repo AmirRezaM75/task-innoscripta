@@ -6,5 +6,6 @@ namespace App\Constants;
 
 enum NewsDataSource: string
 {
-    case NewsApi = 'news_api';
+    case NewsApi = 'news-api';
+    case TheGuardian = 'the-guardian';
 }

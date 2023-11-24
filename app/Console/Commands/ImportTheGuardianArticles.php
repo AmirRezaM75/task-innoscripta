@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\ImportNewsApiArticles as ImportNewsApiArticlesAction;
+use App\Actions\ImportTheGuardianArticles as ImportTheGuardianArticlesAction;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 
-class ImportNewsApiArticles extends Command
+class ImportTheGuardianArticles extends Command
 {
     /** @var string */
-    protected $signature = 'app:import-news-api-articles {--from=} {--to=}';
+    protected $signature = 'app:import-guardian-articles {--from=} {--to=}';
 
     /** @var string */
-    protected $description = 'Fetch articles from NewsApi and store them in database.';
+    protected $description = 'Fetch articles from The Guardian and store them in database.';
 
-    public function handle(ImportNewsApiArticlesAction $action): int
+    public function handle(ImportTheGuardianArticlesAction $action): int
     {
         $from = $this->option('from') ? Carbon::parse($this->option('from')) : now()->startOfDay();
 

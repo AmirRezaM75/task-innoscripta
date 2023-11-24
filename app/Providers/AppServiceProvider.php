@@ -14,6 +14,8 @@ use App\Repository\SourceRepository;
 use App\Repository\SourceRepositoryEloquent;
 use App\Services\NewsApiHttpService;
 use App\Services\NewsApiService;
+use App\Services\TheGuardianHttpService;
+use App\Services\TheGuardianService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,6 +47,13 @@ class AppServiceProvider extends ServiceProvider
             fn () => new NewsApiService(
                 new NewsApiHttpService(config('services.news_api.token')),
                 $this->app->make(NewsApiSourceRepository::class)
+            )
+        );
+
+        $this->app->bind(
+            TheGuardianService::class,
+            fn () => new TheGuardianService(
+                new TheGuardianHttpService(config('services.guardian.token')),
             )
         );
     }
