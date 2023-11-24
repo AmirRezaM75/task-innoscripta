@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repository\ArticlePersistenceRepository;
+use App\Repository\ArticlePersistenceRepositoryElasticsearch;
 use App\Repository\ArticleRepository;
 use App\Repository\ArticleRepositoryEloquent;
 use App\Repository\ArticleSearchRepository;
@@ -31,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->bind(
+            ArticlePersistenceRepository::class,
+            ArticlePersistenceRepositoryElasticsearch::class
+        );
+
         $this->app->bind(
             ArticleRepository::class,
             ArticleRepositoryEloquent::class

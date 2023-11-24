@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\DataTransferObjects\NewsSearchResultArticle;
+use App\Events\ArticleCreated;
 use App\Models\Article;
 use App\Models\Author;
 use App\Models\Category;
@@ -87,5 +88,7 @@ class ImportNewsSearchResultArticle implements ShouldQueue
         $article->published_at = $this->article->publishedAt;
 
         $articleRepository->save($article);
+
+        ArticleCreated::dispatch($article);
     }
 }
