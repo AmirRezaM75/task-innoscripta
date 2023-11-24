@@ -13,6 +13,7 @@ docker compose exec php artisan migrate
 ## Fetch NewsApi sources
 
 Before fetching articles we must fetch sources.
+
 ```bash
 php artisan app:import-newsapi-sources
 ```
@@ -47,4 +48,13 @@ possible values: `mysql`, `elasticsearch`
 
 ```
 SEARCH_ENGINE=elasticsearch
+```
+
+## Schedules
+
+To avoid creating a dedicated docker image which contains [supervisor](https://supervisord.org/), to make the scheduler
+up and running just run following command:
+
+```
+php artisan schedule:run
 ```
