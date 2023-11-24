@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 class ImportNewsApiArticles extends Command
 {
     /** @var string */
-    protected $signature = 'app:import-news-api-articles {--from=} {--to=}';
+    protected $signature = 'app:import-newsapi-articles {--from=} {--to=}';
 
     /** @var string */
     protected $description = 'Fetch articles from NewsApi and store them in database.';

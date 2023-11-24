@@ -53,6 +53,11 @@ class NewsApiService implements NewsService
                 continue;
             }
 
+            // For consistency ignore all articles which don't have description.
+            if (empty($article['description'])) {
+                continue;
+            }
+
             $source = new NewsSearchResultSource($sourceId, $article['source']['name']);
 
             $newsApiSource = $this->newsApiSourceRepository->findByExternalId($sourceId);
@@ -69,10 +74,14 @@ class NewsApiService implements NewsService
                 $newsApiSource->category,
             );
 
-            $author = new NewsSearchResultAuthor(
-                Str::slug($article['author']),
-                $article['author'],
-            );
+            $author = null;
+
+            if (!empty($article['author'])) {
+                $author = new NewsSearchResultAuthor(
+                    Str::slug($article['author']),
+                    $article['author'],
+                );
+            }
 
             // NewsApi not returning any unique id, we could use slugify version of title,
             // but it's not bulletproof if it gets updated.

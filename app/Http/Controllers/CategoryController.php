@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\ListCategories;
-use App\Http\Resources\SourceResource;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryController extends Controller
@@ -14,6 +14,6 @@ class CategoryController extends Controller
     {
         $categories = $action->execute();
 
-        return SourceResource::collection($categories);
+        return CategoryResource::collection($categories);
     }
 }

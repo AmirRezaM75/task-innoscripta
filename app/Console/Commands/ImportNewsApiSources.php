@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 
 class ImportNewsApiSources extends Command
 {
-    protected $signature = 'app:import-news-api-sources';
+    protected $signature = 'app:import-newsapi-sources';
 
     protected $description = 'Import NewsApi sources';
 
