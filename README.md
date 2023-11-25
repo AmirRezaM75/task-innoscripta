@@ -1,11 +1,13 @@
 # Innoscripta
 
+https://github.com/AmirRezaM75/task-innoscripta/
+
 ## Setup
 
 ```bash
 docker compose up -d
 docker compose exec fpm composer install
-docker compose exec php artisan migrate
+docker compose exec fpm php artisan migrate
 ```
 
 ## Commands
