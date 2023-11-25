@@ -7,7 +7,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 
 RUN chmod +x /usr/local/bin/install-php-extensions
 
-RUN install-php-extensions mbstring exif pcntl bcmath gd zip pdo_mysql @composer
+RUN install-php-extensions mbstring exif pcntl bcmath gd zip pdo_mysql redis @composer
 
 RUN useradd -G www-data,root -u $uid -d /home/$user $user \
     && mkdir -p /home/$user/.composer \
